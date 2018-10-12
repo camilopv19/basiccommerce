@@ -1,29 +1,13 @@
-/** Classes */
+// import { Point } from './point';
+import {LikeComponent} from './like.component';
+// import {LikeComponent} from './like.component';
 
-class Point {
-    x: number;
-    y: number;
-    // draw = () => void;
+// var point = new Point(2, 6);
+// point.draw();
 
-    draw() { //When a function is part of a class, it's called a METHOD
-        console.log('X: ' + this.x + ', Y: ' + this.y);
-    }
+let component = new LikeComponent(12, true);
 
-    getDistance(another: Point){
-        // ...
-    }
-}
+component.onClick();
 
-/** OBJECT = Instance of a class */
-// let point: Point = new Point();
-let point = new Point();  //Line 17 abbreviated: point is now "Point" type (cursor upon it shows it)
+console.log(`Likes count: ${component.likesCount}, isSelected: ${component.isSelected}`);
 
-
-point.x = 1;
-point.y = 4;
-
-point.draw();
-
-/** 
- * Class: Human, 
- * Object (instance of 'Human'): Bob */
