@@ -1,81 +1,42 @@
-import { CoursesService } from './courses.service';
 import { Component } from '@angular/core';
-/**                -------------  CSS ----------------*/
-// <courses>                --> "courses"
-// <div class="courses">    --> ".courses"
-// <div id="courses">       --> "#courses"
-@Component({
-    selector: 'courses',  // <courses> will be rendered by Angular
-    template: `<h2>{{ "Your are in: " + getTitle() }}</h2>
-                <ul>
-                    <li *ngFor="let course of courses">
-                        {{course}}
-                    </li>
-                </ul>
-                
-                <table>
-                <tr>
-                <td [attr.colspan]="colSpan"></td>
-                </tr>
-                </table>
-                <button class="btn btn-primary" [class.active]="isActive">Class binding</button>
-                <button class="btn btn-primary" [style.backgroundColor]="isActive ? 'green':'red'">Style binding</button>
 
-                <div (click)="divClick()">
-                    <button (click)="onSave($event)" class="btn btn-primary">Event binding</button>
-                </div>
-                <input (keyup.enter)="keyUp()" />
-                <div>
-                    <input #email (keyup.enter)="onKeyUp(email.value)"/>
-                </div>
-                <h2>{{gfName}}</h2>
-                <img [src]="imgUrl" />
-                <img src="{{imgUrl}}" />
+@Component({
+    selector: 'courses',  
+    template: `
+                <h2>Two Way Binding</h2>
+                <input [(ngModel)]="email" (keyup.enter)="onKeyUp()" />
+                <br/><br/>
+                <h2>Pipes - Course</h2>
+                {{ course.title | uppercase | lowercase}} <br/>
+                {{ course.rating | number:'2.1-1' }} <br/>
+                {{ course.students | number }} <br/>
+                {{ course.price | currency:code }} <br/>
+                {{ course.releaseDate | date:'mediumDate' }} <br/>
+
+                <h2>Custom pipe</h2>
+                {{ text | summary:60}}
     `
-    //  @    - Decorator
-    //  {{}} - String interpolation  --> for DIV's, SPAN, H1/2/3... or text insertion
-    // []="" - Square brackets syntax
-    //  *ngFor - Directives: Building Blocks to manipulate the DOM
-    // #  -  Template variable (DOM - $event.target.value replacement)
+    // angular.io  --> datepipe
+    // {{ course.price | currency:'COP' }} <br/>
+    // <input [value]="email" (keyup.enter)="email = $event.target.value; onKeyUp()" />
 })
 export class CoursesComponent{
-    title = "List of courses";
-    colSpan = 2;
-    isActive = true;
 
-    gfName = "NatyPya";
-    imgUrl = "https://pbs.twimg.com/profile_images/378800000205955806/96b0d621ba020ffcbb5f0ae6d45c09f8_400x400.jpeg";
-    // courses = ["Angular","React","NodeJS","Solidity","Vyper"];
-    getTitle(){
-        return this.title;
-    }
-    
-    //Logic for calling an HTTP service
-    courses; // Fake implementation of a HTTP service consumption --> Just access the courses.service.ts
-             //  for the "get" method
-
-    /** DEPENDENCY INJECTION
-     *  Injecting or providing dependencies of any class into the constructor
-     */
-    constructor(service: CoursesService){  // Now the constructor has a Dependency to the CoursesServices component: Building its instance
-                                            // and CoursesService is mantainable
-        // let service = new CoursesService();  // FRAGILE CODE!! AVOID --> Tightly coupled: Cannot run unit testing properly
-        this.courses = service.getCourses();
+    email = "test@domain.co";
+    onKeyUp(){
+        console.log(this.email);
+        
     }
 
-    onSave($event){
-        $event.stopPropagation();  //Stops event bubbling
-        console.log("Event binded", $event);
+    course = {
+        title: "The complete Angular course",
+        rating: 4.5634,
+        students: 1340,
+        price: 195900.99,
+        releaseDate: new Date(2018,9,15)  //months are from 0 to 11!!
     }
 
-    divClick(){
-        console.log("Div clicked");    
-    }
-    
-    keyUp(){
-        console.log("Novia presionó ENTER");  
-    }
-    onKeyUp(email){
-        console.log(email);  
-    }
+    text =`
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    `
 }
