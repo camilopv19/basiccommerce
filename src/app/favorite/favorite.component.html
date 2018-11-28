@@ -1,9 +1,10 @@
 <p>
-  favorite works!
+  Select the star
 </p>
-<i class="glyphicon"
-  [class.glyphicon-star-empty]="false"
-  [class.glyphicon-star]="isFavorite"
+<span class="glyphicon"
+  [class.glyphicon-star-empty]="!isSelected"
+  [class.glyphicon-star]="isSelected"
   (click)="onClick()">
-</i>
+</span>
+
 
