@@ -1,11 +1,41 @@
-<h1>aNGular</h1>
-<!-- <courses></courses>
-<br/> -->
-<favorite [is-favorite]="post.isFavorite" (change)="onFavoriteChange($event)"></favorite>
-<bootstrap-panel>
+<h1>Angular</h1>
+<!-- <courses></courses> -->
+<br />
+<!-- <favorite [is-favorite]="post.isFavorite" (change)="onFavoriteChange($event)"></favorite> -->
+<!-- <bootstrap-panel>
     <ng-container class="heading">This is the Heading</ng-container>
     <div class="body">
         <h2>ng-Content works</h2>
         <p>Terminé!!</p>
     </div>
-</bootstrap-panel>
+</bootstrap-panel> -->
+
+<div *ngIf="courses.length > 0; then coursesList; else noCourses"></div>
+<ng-template #coursesList>
+  List of courses
+</ng-template>
+<ng-template #noCourses>
+  There are no courses yet
+</ng-template>
+
+<!-- This method put all elements in the DOM -->
+<div [hidden]="courses.length == 0">
+  List
+</div>
+<div [hidden]="courses.length > 0">
+  No Courses
+</div>
+
+<ul class="nav nav-pills">
+  <li class="nav-item"><a class="nav-link active" href="">Map View</a></li>
+  <li class="nav-item"><a class="nav-link " href=""></a>List View</li>
+</ul>
+
+<div [ngSwitch]="viewMode" >
+  <div *ngSwitchCase="'map'">Map View Content</div>
+  <div *ngSwitchCase="'list'">List View Content</div>
+  <div *ngSwitchDefault>Please select one option</div>
+</div>
+
+
+class="nav-link active"

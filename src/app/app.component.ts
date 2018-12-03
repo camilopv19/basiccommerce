@@ -8,10 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   // title = 'basiccommerce';
+  courses = [];
   post = {
     title: "Title",
     isFavorite: false
   }
+
+  viewMode = 'map';
 
   onFavoriteChange(eventArgs: FavoriteChangedEventArgs){
     console.log("Favorite changed: ", eventArgs);
