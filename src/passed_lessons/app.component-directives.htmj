@@ -1,0 +1,93 @@
+<h1>Angular</h1>
+<!-- <courses></courses> -->
+<br />
+<favorite [is-favorite]="post.isFavorite" (change)="onFavoriteChange($event)"></favorite>
+<bootstrap-panel>
+    <ng-container class="heading">This is the Heading</ng-container>
+    <div class="body">
+        <h2>ng-Content works</h2>
+        <p>Terminé!!</p>
+    </div>
+</bootstrap-panel>
+
+<div *ngIf="courses.length > 0; then coursesList; else noCourses"></div>
+<ng-template #coursesList>
+  List of courses
+</ng-template>
+<ng-template #noCourses>
+  There are no courses yet
+</ng-template>
+
+<!-- This method put all elements in the DOM -->
+<div [hidden]="courses.length == 0">
+  List
+</div>
+<div [hidden]="courses.length > 0">
+  No Courses
+</div>
+
+<ul class="nav nav-pills">
+  <li class="nav-item"><a [ngClass]="{ 'nav-link active': active }"  (click)="viewMode = 'map'; active = true">Map View</a></li>
+  <li class="nav-item"><a [ngClass]="{ 'nav-link active': !active }"  (click)="viewMode = 'list'; active = false ">List View </a></li>
+</ul>
+
+<div [ngSwitch]="viewMode">
+  <div *ngSwitchCase="'map'">Map View Content</div>
+  <div *ngSwitchCase="'list'">List View Content</div>
+  <div *ngSwitchDefault>Please select one option</div>
+</div>
+
+<ul>
+  <li *ngFor="let course of courses; even as isEven; index as i">
+    {{ i }} - {{ course.name }} <span *ngIf="isEven">(Even)</span>
+    <button class="btn btn-danger" (click)="onRemove(course)">Remove </button>
+    <button class="btn btn-warning" (click)="onChange(course)">Change </button>
+  </li>
+</ul>
+<div>
+  <button class="btn btn-info" (click)="loadCourses()">Load courses</button>
+  <br>
+
+  <div *ngIf="courses.length > 0; then coursesList; else noCourses"></div>
+  <ng-template #coursesList>
+    <button class="btn btn-success" (click)="onAdd()">Add new course</button>
+    <br>
+    <ul>
+      <!-- the method "trackCourse" doesn't need the ()-->
+      <li *ngFor="let course of courses; trackBy: trackCourse">
+        {{ course.name }}
+        <button class="btn btn-danger" (click)="onRemove(course)">Remove </button>
+        <button class="btn btn-warning" (click)="onChange(course)">Change </button>
+      </li>
+    </ul>
+  </ng-template>
+  <ng-template #noCourses>
+    There are no courses yet
+  </ng-template>
+
+</div>
+
+
+
+<button class="btn"
+  [style.backgroundColor]=" canSave ? 'blue' : 'gray' "
+  [style.color]=" canSave ? 'white' : 'black' "
+  [style.fontWeight]=" canSave ? 'bold' : 'normal' "
+  (click)="canSave = !canSave">
+  Can Save - PropBinding</button>
+  <br>
+
+<button class="btn"
+  [ngStyle]="{
+    'backgroundColor': canSave1 ? 'black' : 'green', 
+    'color': canSave1 ? 'white' : 'black',
+    'fontWeight': canSave1 ? 'normal' : 'bold' }"
+  (click)="canSave1 = !canSave1">
+  Can Save - ngStyle</button>
+
+<br>
+<div>
+  <span > {{ task.assignee?.name }} </span>
+</div>
+
+<input type="text" [appInputFormat]="'uppercase'">
