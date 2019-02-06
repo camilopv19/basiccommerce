@@ -35,7 +35,10 @@ export class PostService {
   }
 
   updatePost(post) {
+    // 'patch' is update only one part of an object
     return this.http.patch(this.url + '/' + post.id, JSON.stringify({ isRead: true }));
+
+    // return this.http.put(this.url, JSON.stringify(post));
   }
 
   deletePost(id) {
