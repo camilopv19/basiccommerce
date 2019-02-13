@@ -41,7 +41,7 @@ export class PostsComponent implements OnInit {
           if (error instanceof BadInput) {
             // this.form.setErrors(error.originalError);
           } else {
-            alert('An unexpected Error ocurred.');
+            alert('An unexpected Error ocurred. ');
             console.log(error);
           }
         });
