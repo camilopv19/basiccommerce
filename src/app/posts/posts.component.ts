@@ -54,9 +54,10 @@ export class PostsComponent implements OnInit {
     this.posts.splice(index, 1);
 
     this.service.delete(post)
-      .subscribe( () => {}, 
+      .subscribe(null, 
         (error: AppError) =>{
-          this.posts.splice(index, 0);
+          this.posts.splice(index, 0, post);
+
           if (error instanceof NotFoundError) {
             alert('This post has already been deleted.');
           }

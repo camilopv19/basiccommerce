@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators'
+import { catchError, map, retry } from 'rxjs/operators'
 import { AppError } from '../common/app-error';
 import { NotFoundError } from '../common/not-found-error';
 import { BadInput } from '../common/bad-input';
@@ -20,11 +20,11 @@ export class DataService {
     }
 
     create(resource) {
-        return throwError(new AppError());
+        // return throwError(new AppError());
 
-        // return this.http.post(this.url, JSON.stringify(resource))
-        //     .pipe(map(response => response))
-        //     .pipe(catchError(this.handleError));
+        return this.http.post(this.url, JSON.stringify(resource))
+            .pipe(map(response => response))
+            .pipe(catchError(this.handleError));
     }
 
     update(resource) {
@@ -37,10 +37,12 @@ export class DataService {
     }
 
     delete(id) {
-        return throwError(new AppError());
-        // return this.http.delete(this.url + '/' + id)
-        //     .pipe(map(response => response))
-        //     .pipe(catchError(this.handleError));
+        // return throwError(new AppError());
+        return this.http.delete(this.url + '/' + id)
+            //.toPromise()
+            .pipe(map(response => response))
+            .pipe(retry(3))
+            .pipe(catchError(this.handleError));
     }
 
     private handleError(error: Response) {
